@@ -1,0 +1,26 @@
+#!/bin/bash
+
+usage () {
+  echo "Usage:"
+  echo "   ./$(basename $0) nfs_master_ip"
+  exit 1
+}
+
+if [ "$#" -ne 1 ]; then
+  echo "Missing NFS mater node"
+  usage
+fi
+
+MASTER_IP=$1
+
+#Install NFS common
+sudo yum install -y nfs-utils
+
+#Create NFS directory
+sudo mkdir -p /dockerdata-nfs
+
+#Mount the remote NFS directory to the local one
+sudo mount $MASTER_IP:/dockerdata-nfs /dockerdata-nfs/
+sudo sed -i "/openvpn/a\sudo mount $MASTER_IP:/dockerdata-nfs /dockerdata-nfs/" /etc/rc.local
+sudo chmod a+x /etc/rc.local
+echo "$MASTER_IP:/dockerdata-nfs /dockerdata-nfs nfs auto,nofail,noatime,nolock,intr,tcp,actimeo=1800 0 0" | sudo tee -a /etc/fstab
