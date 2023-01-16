@@ -79,7 +79,11 @@ color () {
 }
 
 check () {
-    if [ $ID = 'ubuntu' -a ${VERSION_ID} = "20.04"  ];then
+    if grep -qs "ubuntu" /etc/os-release; then
+        OS="ubuntu"
+        OS_VERSION=$(grep 'VERSION_ID' /etc/os-release | cut -d '"' -f 2 | tr -d '.')
+    fi
+    if [[ $OS = 'ubuntu' && ${OS_VERSION} -eq "2004" ]];then
         true
     else
         color "不支持此操作系统，退出!" 1
