@@ -1,4 +1,5 @@
 #/bin/sh
+
 log4j_result=`ls -la /proc/*/fd/ 2>/dev/null|grep -E "log4j-core"|cut -d '>' -f2|sort -u|grep -v rc2.jar` 2>/dev/null
 if echo $log4j_result|grep 'log4j-';then
     echo "find system have log4j vuln jar"
