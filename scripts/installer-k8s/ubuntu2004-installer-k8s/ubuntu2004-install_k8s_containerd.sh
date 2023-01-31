@@ -229,6 +229,7 @@ reset_kubernetes() {
 }
 
 config_crictl () {
+    # crictl releases:  https://github.com/kubernetes-sigs/cri-tools/releases
     cat > /etc/crictl.yaml <<EOF
 runtime-endpoint: unix:///run/containerd/containerd.sock
 image-endpoint: unix:///run/containerd/containerd.sock
