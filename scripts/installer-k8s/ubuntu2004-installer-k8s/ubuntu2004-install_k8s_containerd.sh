@@ -224,7 +224,7 @@ install_cni() {
 }
 
 reset_kubernetes() {
-    kubeadm reset -f --cri-socket unix:///run/cri-dockerd.sock
+    kubeadm reset -f --cri-socket unix:///run/containerd/containerd.sock
     rm -rf  /etc/cni/net.d/  $HOME/.kube/config
 }
 
