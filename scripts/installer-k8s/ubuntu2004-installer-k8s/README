@@ -28,3 +28,7 @@
 # 2. 只需要在第一个master节点选择：1 初始化新的Kubernetes集群
 # 3. 其他节点（master或node）选择：2 加入已有的Kubernetes集群
 # 4. 最后在除了第一个master节点的其他节点执行加入集群的命令kubeadm join即可，初始化的输出信息将会保留在当前目录的kubeadm-init.log文件中备份，以便于后续使用
+
+
+
+
