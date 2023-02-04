@@ -5,3 +5,6 @@ bash master_nfs.sh nfs_client_ip_1 nfs_client_ip_2 nfs_client_ip_3 ......
   
 # nfs client
 bash slave_nfs.sh nfs_server_ip
+
+
+
