@@ -182,9 +182,9 @@ install_containerd () {
     # 修改systemd_cgroup = true会出现以下报错，kubeadm init会失败
     # level=warning msg="failed to load plugin io.containerd.grpc.v1.cri" error="invalid plugin config:
     # `systemd_cgroup` only works for runtime io.containerd.runtime.v1.linux"
-
     #sed -i 's#systemd_cgroup = false#systemd_cgroup = true#g' /etc/containerd/config.toml
-    systemctl restart containerd.service
+    systemctl start containerd.service
+    systemctl enable containerd.service
     [ $? -eq 0 ] && { color "安装Containerd成功!" 0; sleep 1; } || { color "安装Containerd失败!" 1 ; exit 2; }
     sleep 5
 }
