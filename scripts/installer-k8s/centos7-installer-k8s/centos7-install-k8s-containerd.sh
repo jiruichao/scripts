@@ -174,7 +174,6 @@ install_containerd () {
         color "安装containerd失败! 退出!" 1
         exit
     fi
-    mkdir /etc/containerd/
     containerd config default > /etc/containerd/config.toml
     sed -i 's#registry.k8s.io#registry.aliyuncs.com/google_containers#g'  /etc/containerd/config.toml
 
