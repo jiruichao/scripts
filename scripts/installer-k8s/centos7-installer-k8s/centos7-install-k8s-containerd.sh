@@ -107,7 +107,7 @@ EOF
     systemctl stop firewalld 
     systemctl disable firewalld
     setenforce 0
-    sed -i s/^SELINUX=.*$/SELINUX=disabled/ /etc/selinux/configsystemctl disable ufw
+    sed -i s/^SELINUX=.*$/SELINUX=disabled/ /etc/selinux/config
 
     modprobe -- ip_vs
     modprobe -- ip_vs_rr
