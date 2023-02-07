@@ -176,7 +176,7 @@ install_containerd () {
     fi
     mkdir /etc/containerd/
     containerd config default > /etc/containerd/config.toml
-    sed -i 's#registry.k8s.io#${IMAGES_URL}#g'  /etc/containerd/config.toml
+    sed -i 's#registry.k8s.io#registry.aliyuncs.com/google_containers#g'  /etc/containerd/config.toml
 
     # 修改systemd_cgroup = true会出现以下报错，kubeadm init会失败
     # level=warning msg="failed to load plugin io.containerd.grpc.v1.cri" error="invalid plugin config:
