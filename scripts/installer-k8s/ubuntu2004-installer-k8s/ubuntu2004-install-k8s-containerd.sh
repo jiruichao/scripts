@@ -81,6 +81,8 @@ check () {
         OS_VERSION=$(grep 'VERSION_ID' /etc/os-release | cut -d '"' -f 2 | tr -d '.')
     fi
     if [[ $OS = 'ubuntu' && ${OS_VERSION} -eq "2004" ]];then
+        ${COLOR_FAILURE}"安装前请确定主机名已修改完成!如果未修改主机名，请按ctrl+c键退出，修改完主机名后再执行脚本"${END}
+        sleep 6
         true
     else
         color "不支持此操作系统，退出!" 1
@@ -101,7 +103,7 @@ $NODE2_IP $NODE2
 $NODE3_IP $NODE3
 $HARBOR_IP $HARBOR
 EOF
-    hostnamectl set-hostname $(awk -v ip=$LOCAL_IP '{if($1==ip && $2 !~ "kubeapi")print $2}' /etc/hosts)
+    #hostnamectl set-hostname $(awk -v ip=$LOCAL_IP '{if($1==ip && $2 !~ "kubeapi")print $2}' /etc/hosts)
 
     swapoff -a
     sed -i '/swap/s/^/#/' /etc/fstab
@@ -279,5 +281,5 @@ select action in $ACTIONS;do
         ;;
     esac
 done
-exec bash
+
 
