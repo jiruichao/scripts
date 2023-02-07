@@ -167,12 +167,18 @@ EOF
 }
 
 install_containerd () {
-    apt update
-    apt -y install containerd || { color "安装Containerd失败!" 1; exit 1; }
-    mkdir /etc/containerd/
+    apt-get -y remove containerd
+    apt-get update
+    apt-get -y install ca-certificates curl gnupg lsb-release
+    mkdir -p /etc/apt/keyrings
+    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+    apt-get update
+    apt-get -y install containerd.io || { color "安装Containerd失败!" 1; exit 1; }
+    rm -rf /etc/containerd/config.toml
     containerd config default > /etc/containerd/config.toml
-    sed -i 's#registry.k8s.io#${IMAGES_URL}#g'  /etc/containerd/config.toml
-    sed -i 's#systemd_cgroup = false#systemd_cgroup = true#g' /etc/containerd/config.toml
+    sed -i 's#registry.k8s.io#registry.aliyuncs.com/google_containers#g'  /etc/containerd/config.toml
+    #sed -i 's#systemd_cgroup = false#systemd_cgroup = true#g' /etc/containerd/config.toml
     systemctl restart containerd.service
     [ $? -eq 0 ] && { color "安装Containerd成功!" 0; sleep 1; } || { color "安装Containerd失败!" 1 ; exit 2; }
     sleep 5
